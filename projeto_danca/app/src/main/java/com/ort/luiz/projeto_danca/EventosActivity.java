@@ -2,6 +2,7 @@ package com.ort.luiz.projeto_danca;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 
 public class EventosActivity extends AppCompatActivity {
 
@@ -9,5 +10,6 @@ public class EventosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventos);
+
     }
 }
