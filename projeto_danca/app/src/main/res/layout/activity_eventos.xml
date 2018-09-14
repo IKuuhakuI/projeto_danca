@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnDia1Id"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -48,11 +48,11 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/button_border"
         android:text="Dia 1"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/btnDia2Id"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnDia2Id"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnDia3Id"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
@@ -71,7 +71,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/button_border"
         android:text="Dia 3"
-        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@+id/btnDia2Id"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <ListView
@@ -81,5 +81,5 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDia1Id" />
 </android.support.constraint.ConstraintLayout>

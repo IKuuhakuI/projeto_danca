@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "610563682151",
+    "firebase_url": "https://danca-israeli.firebaseio.com",
+    "project_id": "danca-israeli",
+    "storage_bucket": "danca-israeli.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610563682151:android:f756038fb218b42a",
+        "android_client_info": {
+          "package_name": "com.ort.luiz.projeto_danca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610563682151-e543osk8pvv50kvarf649kc7adfb37ug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ort.luiz.projeto_danca",
+            "certificate_hash": "40185c604794ba07335997fce85cbe03d0207634"
+          }
+        },
+        {
+          "client_id": "610563682151-72etbgh9nadhsf7fa1f9olnp8ipb8dc5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq_Tg7I-vt3_V4_9d0951yorZcYKKQPnQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610563682151-72etbgh9nadhsf7fa1f9olnp8ipb8dc5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
