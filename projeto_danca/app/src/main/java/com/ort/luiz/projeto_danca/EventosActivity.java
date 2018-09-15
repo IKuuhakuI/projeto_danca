@@ -118,19 +118,18 @@ public class EventosActivity extends AppCompatActivity {
                 listaItens.setAdapter(adaptador);
                 listaItens.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
                     String valorClicado;
-                    valorClicado = listaItens.getItemAtPosition(position).toString().replace("->", "às");
+                    valorClicado = listaItens.getItemAtPosition(position).toString().substring(0, listaItens.getItemAtPosition(position).toString().indexOf("-"));
 
                     dialogo = new AlertDialog.Builder(EventosActivity.this);
-                    dialogo.setTitle("Agenda");
+                    dialogo.setTitle("Adicionar Evento");
 
-                    dialogo.setMessage("Deseja adicionar " + valorClicado + " a sua agenda?");
+                    dialogo.setMessage("Deixe as notificações ligadas para ser avisado sobre o início do " + valorClicado);
                     dialogo.setCancelable(false);
 
-                    dialogo.setNegativeButton("Não", (dialog, which) ->
-                            Toast.makeText(getApplicationContext(), "Cancelado", Toast.LENGTH_SHORT).show()
+                    dialogo.setNeutralButton("Ok", (dialog, which) ->
+                            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show()
                     );
-                    dialogo.setPositiveButton("Sim", (dialog, which) ->
-                            Toast.makeText(getApplicationContext(), "Adicionado", Toast.LENGTH_SHORT).show());
+
                     dialogo.create();
                     dialogo.show();
                 });
