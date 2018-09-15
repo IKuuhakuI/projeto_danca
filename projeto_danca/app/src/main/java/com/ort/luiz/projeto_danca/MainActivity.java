@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnEventos = findViewById(R.id.btnEventosId);
         btnEventos.setOnClickListener((V)->{
+            btnEventos.setBackgroundResource(R.color.White);
             startActivity(new Intent(MainActivity.this, EventosActivity.class));
         });
 

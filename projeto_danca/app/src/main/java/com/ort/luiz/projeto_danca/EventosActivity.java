@@ -1,8 +1,6 @@
 package com.ort.luiz.projeto_danca;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,12 +26,12 @@ public class EventosActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialogo;
 
-    String selecionado = "Dia1";
+    String selecionado = "";
 
     private ListView listaItens;
     String[]itens = {"1"};
 
-    Button btnDia1, btnDia2, btnDia3;
+    Button btnDia1, btnDia2, btnDia3, btnVoltarEventos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +43,38 @@ public class EventosActivity extends AppCompatActivity {
         btnDia1 = findViewById(R.id.btnDia1Id);
         btnDia2 = findViewById(R.id.btnDia2Id);
         btnDia3 = findViewById(R.id.btnDia3Id);
+        btnVoltarEventos = findViewById(R.id.btnVoltarEventosId);
 
         btnDia1.setOnClickListener((V)->{
             selecionado = "Dia1";
             agendaEventos(selecionado);
 
+            btnDia1.setBackgroundResource(R.color.White);
+            btnDia2.setBackgroundResource(R.drawable.button_border);
+            btnDia3.setBackgroundResource(R.drawable.button_border);
         });
 
         btnDia2.setOnClickListener((V)->{
             selecionado = "Dia2";
             agendaEventos(selecionado);
+
+            btnDia1.setBackgroundResource(R.drawable.button_border);
+            btnDia2.setBackgroundResource(R.color.White);
+            btnDia3.setBackgroundResource(R.drawable.button_border);
         });
 
         btnDia3.setOnClickListener((V)->{
             selecionado = "Dia3";
             agendaEventos(selecionado);
+
+            btnDia1.setBackgroundResource(R.drawable.button_border);
+            btnDia2.setBackgroundResource(R.drawable.button_border);
+            btnDia3.setBackgroundResource(R.color.White);
+        });
+
+        btnVoltarEventos.setOnClickListener((V)->{
+            btnVoltarEventos.setBackgroundResource(R.color.White);
+            startActivity(new Intent(this, MainActivity.class));
         });
 
         //Eventos
@@ -89,8 +104,8 @@ public class EventosActivity extends AppCompatActivity {
                 String valor1 = valor.replace("{", "");
                 valor = valor1.replace("}", "");
                 valor1 = valor.replace("=", " -> ");
-                itens = valor1.split(",");
-                Toast.makeText(getApplicationContext(),valor,Toast.LENGTH_SHORT).show();
+                itens = valor1.split(", ");
+                //Toast.makeText(getApplicationContext(),valor,Toast.LENGTH_SHORT).show();
 
                 listaItens = findViewById(R.id.listViewId);
                 ArrayAdapter<String> adaptador = new ArrayAdapter<>(
