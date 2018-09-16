@@ -67,37 +67,80 @@
     <Button
         android:id="@+id/btnFacebookId"
 
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="82dp"
         android:layout_marginRight="82dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/facebook_icon"
         app:layout_constraintEnd_toStartOf="@+id/btnInternetId"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8"
-        android:layout_height="50dp"
-        android:layout_width="50dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <Button
         android:id="@+id/btnInstagramId"
 
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="82dp"
         android:layout_marginStart="82dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/instagram_icon"
         app:layout_constraintStart_toEndOf="@+id/btnInternetId"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8"
-        android:layout_height="50dp"
-        android:layout_width="50dp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <Button
         android:id="@+id/btnInternetId"
 
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/internet_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8"
-        android:layout_height="50dp"
-        android:layout_width="50dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+    <ListView
+        android:id="@+id/listViewLeakotExemploIntegrantesId"
+        android:layout_width="176dp"
+        android:layout_height="121dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginLeft="51dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="7dp"
+        android:text="Integrantes:"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFacebookId" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="7dp"
+        android:text="Apresentações:"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnInstagramId" />
+
+    <ListView
+        android:id="@+id/listViewLeakotExemploHorariosId"
+        android:layout_width="176dp"
+        android:layout_height="121dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </android.support.constraint.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +21,15 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LeakotExemploActivity extends AppCompatActivity {
     FirebaseDatabase database;
-    DatabaseReference acontecendoRef;
+    DatabaseReference acontecendoRef, leakotExemploRef;
 
     TextView scrollingText;
     Button btnVoltarLeakotExemplo, btnFacebook, btnInstagram, btnInternet;
+
+    private ListView horarioLeakotExemplo, integrantesLeakotExemplo;
+
+    String[]horarios = {"13"};
+    String[]integrantes = {"Exemplo"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,15 @@ public class LeakotExemploActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
 
+        leakotExemploRef = database.getReference("Grupos");
+        leakotExemploRef.child("Grupo1").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.child("Apresentacoes");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }});
 
         Context context = getApplicationContext();
 
@@ -71,7 +86,14 @@ public class LeakotExemploActivity extends AppCompatActivity {
 
         btnInternet = findViewById(R.id.btnInternetId);
         btnInternet.setOnClickListener((V)->{
+            String valorClicado;
+            valorClicado = "";
 
+            String url = "https://www.google.com.br/search?q=" + valorClicado;
+            Intent browserIntent = new Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(url));
+            startActivity(browserIntent);
         });
     }
 
@@ -99,7 +121,7 @@ public class LeakotExemploActivity extends AppCompatActivity {
             context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
             return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/hebraicario"));
         } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/"));
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/hebraicario"));
         }
     }
 }
