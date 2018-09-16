@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".EventosActivity"></activity>
+        <activity android:name=".EventosActivity" />
+        <activity android:name=".LeakotActivity"></activity>
     </application>
 
 </manifest>
