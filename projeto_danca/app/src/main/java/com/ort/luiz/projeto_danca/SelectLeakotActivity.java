@@ -57,7 +57,7 @@ public class SelectLeakotActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), valorClicado, Toast.LENGTH_SHORT).show();
 
-            //startActivity(browserIntent);
+            startActivity(new Intent(this, LeakotExemploActivity.class));
 
         });
 
