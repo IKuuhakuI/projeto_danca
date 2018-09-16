@@ -66,34 +66,38 @@
 
     <Button
         android:id="@+id/btnFacebookId"
-        android:layout_width="50"
-        android:layout_height="50"
+
         android:layout_marginEnd="82dp"
         android:layout_marginRight="82dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/facebook_icon"
         app:layout_constraintEnd_toStartOf="@+id/btnInternetId"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        android:layout_height="50dp"
+        android:layout_width="50dp"/>
 
     <Button
         android:id="@+id/btnInstagramId"
-        android:layout_width="50"
-        android:layout_height="50"
+
         android:layout_marginLeft="82dp"
         android:layout_marginStart="82dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/instagram_icon"
         app:layout_constraintStart_toEndOf="@+id/btnInternetId"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        />
 
     <Button
         android:id="@+id/btnInternetId"
-        android:layout_width="50"
-        android:layout_height="50"
+
         android:layout_marginTop="10dp"
         android:background="@drawable/internet_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        android:layout_height="50dp"
+        android:layout_width="50dp" />
 
 </android.support.constraint.ConstraintLayout>

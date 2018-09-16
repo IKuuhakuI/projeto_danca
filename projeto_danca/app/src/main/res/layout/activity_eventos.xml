@@ -35,7 +35,7 @@
         android:singleLine="true"
         android:text="Acontecendo agora! Imperdível! Precisa ver! Venha agora!"
         android:textColor="@android:color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent" />
 
