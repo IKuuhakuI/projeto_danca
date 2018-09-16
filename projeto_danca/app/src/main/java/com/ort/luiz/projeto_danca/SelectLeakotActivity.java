@@ -22,8 +22,6 @@ public class SelectLeakotActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference acontecendoRef;
 
-    private AlertDialog.Builder dialogo;
-
     private ListView listaItens;
     String[]itens = {"Leakot 1", "Leakot 2", "Leakot 3"};
 
@@ -42,7 +40,26 @@ public class SelectLeakotActivity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
         });
 
-        
+        listaItens = findViewById(R.id.listViewLeakotId);
+
+        ArrayAdapter<String> adaptador = new ArrayAdapter<>(
+                getApplicationContext(), // contexto da aplicação
+                android.R.layout.simple_list_item_1, // layout
+                android.R.id.text1, // id do layout
+                itens
+        );
+
+        listaItens.setAdapter(adaptador);
+
+        listaItens.setOnItemClickListener((parent, view, position, id) -> {
+            String valorClicado;
+            valorClicado = listaItens.getItemAtPosition(position).toString();
+
+            Toast.makeText(getApplicationContext(), valorClicado, Toast.LENGTH_SHORT).show();
+
+            //startActivity(browserIntent);
+
+        });
 
         database = FirebaseDatabase.getInstance();
         acontecendoRef = database.getReference("Acontecendo_agora");
