@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -58,11 +59,27 @@ public class LeakotExemploActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
 
-        leakotExemploRef = database.getReference("Grupos");
-        leakotExemploRef.child("Grupo1").addValueEventListener(new ValueEventListener() {
+
+
+        leakotExemploRef = database.getReference("Grupos").child("Grupo1").child("Apresentacoes");
+        leakotExemploRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                dataSnapshot.child("Apresentacoes");
+                horarioLeakotExemplo = findViewById(R.id.listViewLeakotExemploHorariosId);
+
+                String getApresentacoes = dataSnapshot.toString().replace("DataSnapshot { key = Apresentacoes, value = {", "");
+                String temp = getApresentacoes.replace("} }", "");
+                getApresentacoes = temp.replace("=", " - ");
+
+                horarios = getApresentacoes.split(", ");
+
+                ArrayAdapter<String> adaptadorHorario = new ArrayAdapter<>(
+                        getApplicationContext(), // contexto da aplicação
+                        android.R.layout.simple_list_item_1, // layout
+                        android.R.id.text1, // id do layout
+                        horarios
+                );
+                horarioLeakotExemplo.setAdapter(adaptadorHorario);
             }
 
             @Override

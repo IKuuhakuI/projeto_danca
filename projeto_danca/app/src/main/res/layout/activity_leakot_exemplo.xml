@@ -101,11 +101,16 @@
 
     <ListView
         android:id="@+id/listViewLeakotExemploIntegrantesId"
-        android:layout_width="176dp"
-        android:layout_height="121dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginLeft="7dp"
+        android:layout_marginRight="5dp"
         android:layout_marginStart="7dp"
         android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnVoltarLeakotExemploId"
+        app:layout_constraintEnd_toStartOf="@+id/listViewLeakotExemploHorariosId"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -113,8 +118,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginLeft="51dp"
-        android:layout_marginStart="51dp"
+        android:layout_marginLeft="54dp"
+        android:layout_marginStart="54dp"
         android:layout_marginTop="7dp"
         android:text="Integrantes:"
         android:textColor="@android:color/black"
@@ -125,8 +130,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         android:layout_marginTop="7dp"
         android:text="Apresentações:"
         android:textColor="@android:color/black"
@@ -135,12 +140,17 @@
 
     <ListView
         android:id="@+id/listViewLeakotExemploHorariosId"
-        android:layout_width="176dp"
-        android:layout_height="121dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginEnd="7dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="7dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnVoltarLeakotExemploId"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/listViewLeakotExemploIntegrantesId"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </android.support.constraint.ConstraintLayout>

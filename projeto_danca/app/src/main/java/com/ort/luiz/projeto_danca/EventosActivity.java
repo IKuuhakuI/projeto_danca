@@ -92,8 +92,6 @@ public class EventosActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
-
-
     }
 
     private void agendaEventos (String selecionado) {
