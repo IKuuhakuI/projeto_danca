@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,7 +28,7 @@ public class LeakotExemploActivity extends AppCompatActivity {
     private ListView horarioLeakotExemplo, integrantesLeakotExemplo;
 
     String[]horarios = {"13"};
-    String[]integrantes = {"Exemplo"};
+    String[]integrantes = {"Integrante 1: Dançarina", "Integrante 2: Compositor", "Integrante 3: Dançarina"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +57,15 @@ public class LeakotExemploActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
 
+        integrantesLeakotExemplo = findViewById(R.id.listViewLeakotExemploIntegrantesId);
+        ArrayAdapter<String> adaptadorIntegrantes = new ArrayAdapter<>(
+                getApplicationContext(), // contexto da aplicação
+                android.R.layout.simple_list_item_1, // layout
+                android.R.id.text1, // id do layout
+                integrantes
+        );
 
+        integrantesLeakotExemplo.setAdapter(adaptadorIntegrantes);
 
         leakotExemploRef = database.getReference("Grupos").child("Grupo1").child("Apresentacoes");
         leakotExemploRef.addValueEventListener(new ValueEventListener() {
