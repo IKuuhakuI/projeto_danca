@@ -107,7 +107,7 @@ public class EventosActivity extends AppCompatActivity {
                 String valor = dataSnapshot.getValue().toString();
                 String valor1 = valor.replace("{", "");
                 valor = valor1.replace("}", "");
-                valor1 = valor.replace("=", " -> ");
+                valor1 = valor.replace("=", " > ");
                 itens = valor1.split(", ");
                 //Toast.makeText(getApplicationContext(),valor,Toast.LENGTH_SHORT).show();
 
@@ -121,21 +121,38 @@ public class EventosActivity extends AppCompatActivity {
                 //Lista de itens
                 listaItens.setAdapter(adaptador);
                 listaItens.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
-                    String valorClicado;
-                    String horaSelecionada;
+                    String valorClicado, horaSelecionada, horaFinalSelecionada, local;
 
-                    valorClicado = listaItens.getItemAtPosition(position).toString().substring(0, listaItens.getItemAtPosition(position).toString().indexOf("-"));
-                    horaSelecionada = listaItens.getItemAtPosition(position).toString().substring(listaItens.getItemAtPosition(position).toString().indexOf(">") + 2 , listaItens.getItemAtPosition(position).toString().length());
+                    valorClicado = listaItens.getItemAtPosition(position).toString().substring(0, listaItens.getItemAtPosition(position).toString().indexOf(">") - 1);
+                    horaSelecionada = listaItens.getItemAtPosition(position).toString().substring(listaItens.getItemAtPosition(position).toString().length() - 13, listaItens.getItemAtPosition(position).toString().length() - 8);
 
-                    int hora = Integer.parseInt(horaSelecionada.substring(0, 2));
-                    int minuto = Integer.parseInt(horaSelecionada.substring(3, horaSelecionada.length()));
+                    horaFinalSelecionada = listaItens.getItemAtPosition(position).toString().substring(listaItens.getItemAtPosition(position).toString().length() - 5 , listaItens.getItemAtPosition(position).toString().length());
 
-                    //Toast.makeText(getApplicationContext(), converteData(horaSelecionada), Toast.LENGTH_SHORT).show();
+                    local = listaItens.getItemAtPosition(position).toString().substring(listaItens.getItemAtPosition(position).toString().indexOf(">")+2, listaItens.getItemAtPosition(position).toString().length() - 16);
+
+                    //Toast.makeText(getApplicationContext(), local, Toast.LENGTH_SHORT).show();
+
+                    int horaInicial = Integer.parseInt(horaSelecionada.substring(0, 2));
+                    int minutoInicial = Integer.parseInt(horaSelecionada.substring(3, horaSelecionada.length()));
+
+                    int horaFinal = Integer.parseInt(horaFinalSelecionada.substring(0, 2));
+                    int minutoFinal = Integer.parseInt(horaFinalSelecionada.substring(3, horaFinalSelecionada.length()));
+
+                    String dia = "";
+
+                    if(selecionado == "Dia1"){
+                        dia = "19/10";
+                    } else if(selecionado == "Dia2"){
+                        dia = "20/10";
+                    } else if(selecionado == "Dia3"){
+                        dia = "21/10";
+                    }
+
 
                     dialogo = new AlertDialog.Builder(EventosActivity.this);
                     dialogo.setTitle("Adicionar Evento");
 
-                    dialogo.setMessage("Deseja adicionar o " + valorClicado + " às " + horaSelecionada + " ao seu calendário?");
+                    dialogo.setMessage("Deseja adicionar o evento: " + valorClicado + " das " + horaSelecionada + " até " + horaFinalSelecionada + " no dia " + dia + " (" + local + ") ao seu calendário?");
                     dialogo.setCancelable(false);
 
                     dialogo.setNegativeButton("Não", (dialog, which) -> {
@@ -149,6 +166,7 @@ public class EventosActivity extends AppCompatActivity {
                         intent.setType("vnd.android.cursor.item/event");
                         intent.putExtra("title", valorClicado);
                         intent.putExtra("allDay", false);
+                        intent.putExtra("eventLocation", local);
 
                         cal.set(Calendar.YEAR, 2018);
                         cal.set(Calendar.MONTH, 9);
@@ -161,11 +179,14 @@ public class EventosActivity extends AppCompatActivity {
                             cal.set(Calendar.DAY_OF_MONTH, 21);
                         }
 
-                        cal.set(Calendar.AM_PM, Calendar.PM);
-                        cal.set(Calendar.HOUR_OF_DAY, hora);
-                        cal.set(Calendar.MINUTE, minuto);
-
+                        cal.set(Calendar.HOUR_OF_DAY, horaInicial);
+                        cal.set(Calendar.MINUTE, minutoInicial);
                         intent.putExtra("beginTime", cal.getTimeInMillis());
+
+                        cal.set(Calendar.HOUR_OF_DAY, horaFinal);
+                        cal.set(Calendar.MINUTE, minutoFinal);
+
+                        intent.putExtra("endTime", cal.getTimeInMillis());
 
                         startActivity(intent);
                     });
