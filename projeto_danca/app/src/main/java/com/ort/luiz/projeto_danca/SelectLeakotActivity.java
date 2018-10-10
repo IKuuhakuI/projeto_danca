@@ -23,7 +23,7 @@ public class SelectLeakotActivity extends AppCompatActivity {
     DatabaseReference acontecendoRef;
 
     private ListView listaItens;
-    String[]itens = {"Leakot 1", "Leakot 2", "Leakot 3"};
+    String[]itens = {"Chazitão", "Dalia", "Habonito", "Betar", "Shalom (Hebraica SP)"};
 
     Button btnVoltarLeakot;
 
