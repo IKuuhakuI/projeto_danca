@@ -53,9 +53,9 @@ public class SelectLeakotActivity extends AppCompatActivity {
 
         listaItens.setOnItemClickListener((parent, view, position, id) -> {
             String valorClicado;
-            valorClicado = listaItens.getItemAtPosition(position).toString();
+            //valorClicado = listaItens.getItemAtPosition(position).toString();
 
-            Toast.makeText(getApplicationContext(), valorClicado, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), valorClicado, Toast.LENGTH_SHORT).show();
 
             startActivity(new Intent(this, LeakotExemploActivity.class));
 

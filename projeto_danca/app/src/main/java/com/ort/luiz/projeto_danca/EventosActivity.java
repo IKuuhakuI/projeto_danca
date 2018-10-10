@@ -26,7 +26,7 @@ public class EventosActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialogo;
 
-    String selecionado = "";
+    String selecionado = "1";
 
     private ListView listaItens;
     String[]itens = {"1"};
