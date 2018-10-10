@@ -1,5 +1,6 @@
 package com.ort.luiz.projeto_danca;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class EventosActivity extends AppCompatActivity {
     FirebaseDatabase database;
@@ -116,18 +122,53 @@ public class EventosActivity extends AppCompatActivity {
                 listaItens.setAdapter(adaptador);
                 listaItens.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
                     String valorClicado;
+                    String horaSelecionada;
+
                     valorClicado = listaItens.getItemAtPosition(position).toString().substring(0, listaItens.getItemAtPosition(position).toString().indexOf("-"));
+                    horaSelecionada = listaItens.getItemAtPosition(position).toString().substring(listaItens.getItemAtPosition(position).toString().indexOf(">") + 2 , listaItens.getItemAtPosition(position).toString().length());
+
+                    int hora = Integer.parseInt(horaSelecionada.substring(0, 2));
+                    int minuto = Integer.parseInt(horaSelecionada.substring(3, horaSelecionada.length()));
+
+                    //Toast.makeText(getApplicationContext(), converteData(horaSelecionada), Toast.LENGTH_SHORT).show();
 
                     dialogo = new AlertDialog.Builder(EventosActivity.this);
                     dialogo.setTitle("Adicionar Evento");
 
-                    dialogo.setMessage("Deixe as notificações ligadas para ser avisado sobre o início do " + valorClicado);
+                    dialogo.setMessage("Deseja adicionar o " + valorClicado + " às " + horaSelecionada + " ao seu calendário?");
                     dialogo.setCancelable(false);
 
-                    dialogo.setNeutralButton("Ok", (dialog, which) ->
-                            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show()
+                    dialogo.setNegativeButton("Não", (dialog, which) -> {
+                    }
                     );
 
+                    dialogo.setPositiveButton("Sim", (dialog, which) -> {
+                        Calendar cal = Calendar.getInstance();
+                        Intent intent = new Intent(Intent.ACTION_EDIT);
+
+                        intent.setType("vnd.android.cursor.item/event");
+                        intent.putExtra("title", valorClicado);
+                        intent.putExtra("allDay", false);
+
+                        cal.set(Calendar.YEAR, 2018);
+                        cal.set(Calendar.MONTH, 9);
+
+                        if(selecionado == "Dia1") {
+                            cal.set(Calendar.DAY_OF_MONTH, 19);
+                        } else if(selecionado == "Dia2") {
+                            cal.set(Calendar.DAY_OF_MONTH, 20);
+                        } else if(selecionado == "Dia3") {
+                            cal.set(Calendar.DAY_OF_MONTH, 21);
+                        }
+
+                        cal.set(Calendar.AM_PM, Calendar.PM);
+                        cal.set(Calendar.HOUR_OF_DAY, hora);
+                        cal.set(Calendar.MINUTE, minuto);
+
+                        intent.putExtra("beginTime", cal.getTimeInMillis());
+
+                        startActivity(intent);
+                    });
                     dialogo.create();
                     dialogo.show();
                 });
@@ -137,6 +178,33 @@ public class EventosActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
+            Date converteData(String data) {
+                Date novaData = new Date();
+                String partDate = "2018-10-19";
+
+                if(selecionado == "Dia1"){
+                    partDate = "2018-10-19";
+                } else if(selecionado == "Dia2") {
+                    partDate = "2018-10-20";
+                } else if(selecionado == "Dia 3") {
+                    partDate = "2018-10-21";
+                }
+
+                String dtStart = partDate.concat(data).concat(":00");
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                try {
+                    Date date = format.parse(dtStart);
+                    System.out.println(date);
+                    novaData = date;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return novaData;
+            }
         });
+
+
     }
 }
