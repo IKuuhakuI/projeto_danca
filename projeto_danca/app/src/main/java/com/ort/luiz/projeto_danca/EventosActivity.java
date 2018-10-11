@@ -130,7 +130,7 @@ public class EventosActivity extends AppCompatActivity {
 
                     local = listaItens.getItemAtPosition(position).toString().substring(listaItens.getItemAtPosition(position).toString().indexOf(">")+2, listaItens.getItemAtPosition(position).toString().length() - 16);
 
-                    //Toast.makeText(getApplicationContext(), local, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), horaSelecionada, Toast.LENGTH_SHORT).show();
 
                     int horaInicial = Integer.parseInt(horaSelecionada.substring(0, 2));
                     int minutoInicial = Integer.parseInt(horaSelecionada.substring(3, horaSelecionada.length()));
@@ -138,16 +138,17 @@ public class EventosActivity extends AppCompatActivity {
                     int horaFinal = Integer.parseInt(horaFinalSelecionada.substring(0, 2));
                     int minutoFinal = Integer.parseInt(horaFinalSelecionada.substring(3, horaFinalSelecionada.length()));
 
-                    String dia = "";
+                    String dia;
 
-                    if(selecionado == "Dia1"){
+                    if(selecionado == "Dia1" && (horaInicial != 00 && horaInicial != 01 && horaInicial != 02 && horaInicial != 03 && horaInicial != 04)){
                         dia = "19/10";
-                    } else if(selecionado == "Dia2"){
+                    } else if(selecionado == "Dia2" && (horaInicial != 00 && horaInicial != 01 && horaInicial != 02 && horaInicial != 03 && horaInicial != 04) || selecionado == "Dia1"){
                         dia = "20/10";
-                    } else if(selecionado == "Dia3"){
+                    } else if(selecionado == "Dia3" && (horaInicial != 00 && horaInicial != 01 && horaInicial != 02 && horaInicial != 03 && horaInicial != 04) || selecionado == "Dia2"){
                         dia = "21/10";
+                    } else {
+                        dia = "22/10";
                     }
-
 
                     dialogo = new AlertDialog.Builder(EventosActivity.this);
                     dialogo.setTitle("Adicionar Evento");
@@ -172,16 +173,48 @@ public class EventosActivity extends AppCompatActivity {
                         cal.set(Calendar.MONTH, 9);
 
                         if(selecionado == "Dia1") {
-                            cal.set(Calendar.DAY_OF_MONTH, 19);
+                            if(horaInicial == 00 || horaInicial == 01 || horaInicial == 02 || horaInicial == 03 || horaInicial == 04) {
+                                cal.set(Calendar.DAY_OF_MONTH, 20);
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, 19);
+                            }
                         } else if(selecionado == "Dia2") {
-                            cal.set(Calendar.DAY_OF_MONTH, 20);
+                            if(horaInicial == 00 || horaInicial == 01 || horaInicial == 02 || horaInicial == 03 || horaInicial == 04) {
+                                cal.set(Calendar.DAY_OF_MONTH, 21);
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, 20);
+                            }
                         } else if(selecionado == "Dia3") {
-                            cal.set(Calendar.DAY_OF_MONTH, 21);
+                            if(horaInicial == 00 || horaInicial == 01 || horaInicial == 02 || horaInicial == 03 || horaInicial == 04) {
+                                cal.set(Calendar.DAY_OF_MONTH, 22);
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, 21);
+                            }
                         }
 
                         cal.set(Calendar.HOUR_OF_DAY, horaInicial);
                         cal.set(Calendar.MINUTE, minutoInicial);
                         intent.putExtra("beginTime", cal.getTimeInMillis());
+
+                        if(selecionado == "Dia1") {
+                            if(horaFinal == 00 || horaFinal == 01 || horaFinal == 02 || horaFinal == 03 || horaFinal == 04) {
+                                cal.set(Calendar.DAY_OF_MONTH, 20);
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, 19);
+                            }
+                        } else if(selecionado == "Dia2") {
+                            if(horaFinal == 00 || horaFinal == 01 || horaFinal == 02 || horaFinal == 03 || horaFinal == 04) {
+                                cal.set(Calendar.DAY_OF_MONTH, 21);
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, 20);
+                            }
+                        } else if(selecionado == "Dia3") {
+                            if(horaFinal == 00 || horaFinal == 01 || horaFinal == 02 || horaFinal == 03 || horaFinal == 04) {
+                                cal.set(Calendar.DAY_OF_MONTH, 22);
+                            } else {
+                                cal.set(Calendar.DAY_OF_MONTH, 21);
+                            }
+                        }
 
                         cal.set(Calendar.HOUR_OF_DAY, horaFinal);
                         cal.set(Calendar.MINUTE, minutoFinal);
