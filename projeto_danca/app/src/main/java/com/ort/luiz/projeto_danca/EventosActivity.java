@@ -118,6 +118,7 @@ public class EventosActivity extends AppCompatActivity {
                         android.R.id.text1,
                         itens
                 );
+
                 //Lista de itens
                 listaItens.setAdapter(adaptador);
                 listaItens.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
