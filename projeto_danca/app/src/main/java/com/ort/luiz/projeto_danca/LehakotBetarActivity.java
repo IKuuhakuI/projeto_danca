@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -18,21 +19,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LeakotExemploActivity extends AppCompatActivity {
+public class LehakotBetarActivity extends AppCompatActivity {
     FirebaseDatabase database;
-    DatabaseReference acontecendoRef, leakotExemploRef;
+    DatabaseReference acontecendoRef, lehakotExemploRef;
 
     TextView scrollingText;
-    Button btnVoltarLeakotExemplo, btnFacebook, btnInstagram, btnInternet;
+    Button btnVoltarLeakotExemplo, btnFacebook, btnInstagram, btnInternet, btnVotar;
 
     private ListView horarioLeakotExemplo;
+
+    int palmas;
 
     String[]horarios = {"13"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leakot_exemplo);
+        setContentView(R.layout.activity_lehakot_betar);
 
         scrollingText = findViewById(R.id.scrollingTextId4);
 
@@ -56,18 +59,19 @@ public class LeakotExemploActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
 
-
-        leakotExemploRef = database.getReference("Grupos").child("Grupo1").child("Apresentacoes");
-        leakotExemploRef.addValueEventListener(new ValueEventListener() {
+        lehakotExemploRef = database.getReference("Lehakot").child("5");
+        lehakotExemploRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 horarioLeakotExemplo = findViewById(R.id.listViewLeakotExemploHorariosId);
 
-                String getApresentacoes = dataSnapshot.toString().replace("DataSnapshot { key = Apresentacoes, value = {", "");
-                String temp = getApresentacoes.replace("} }", "");
+                String getApresentacoes = dataSnapshot.child("Apresentacoes").toString().replace("DataSnapshot { key = Apresentacoes, value = ", "");
+                String temp = getApresentacoes.replace(" }", "");
+
                 getApresentacoes = temp.replace("=", " - ");
 
                 horarios = getApresentacoes.split(", ");
+                palmas = Integer.parseInt(dataSnapshot.child("kapaim").getValue().toString());
 
                 ArrayAdapter<String> adaptadorHorario = new ArrayAdapter<>(
                         getApplicationContext(), // contexto da aplicação
@@ -80,6 +84,14 @@ public class LeakotExemploActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
+
+
+        btnVotar = findViewById(R.id.btnVotarBetarId);
+
+        btnVotar.setOnClickListener(v -> {
+            palmas += 1;
+            lehakotExemploRef.child("kapaim").setValue(palmas);
+        });
 
         Context context = getApplicationContext();
 
@@ -136,5 +148,9 @@ public class LeakotExemploActivity extends AppCompatActivity {
         } catch (Exception e) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/hebraicario"));
         }
+    }
+
+    private void alert(String msg){
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

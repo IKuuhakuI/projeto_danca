@@ -24,7 +24,7 @@ public class SelectLeakotActivity extends AppCompatActivity {
     DatabaseReference acontecendoRef;
 
     private ListView listaItens;
-    String[]itens = {"Chazitão", "Dalia", "Habonito", "Betar", "Shalom (Hebraica SP)"};
+    String[]itens = {"Betar", "Bnei Akiva",  "Chazitão", "Dalia", "Habonito", "Shalom (Hebraica SP)"};
 
     Button btnVoltarLeakot;
 
@@ -54,11 +54,13 @@ public class SelectLeakotActivity extends AppCompatActivity {
 
         listaItens.setOnItemClickListener((parent, view, position, id) -> {
             String valorClicado;
-            //valorClicado = listaItens.getItemAtPosition(position).toString();
+            valorClicado = listaItens.getItemAtPosition(position).toString();
 
             //Toast.makeText(getApplicationContext(), valorClicado, Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(this, LeakotExemploActivity.class));
+            if(valorClicado == "Betar") {
+                startActivity(new Intent(this, LehakotBetarActivity.class));
+            }
 
         });
 
