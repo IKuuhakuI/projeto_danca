@@ -26,7 +26,7 @@
         <activity android:name=".EventosActivity" />
         <activity android:name=".SelectLeakotActivity" />
         <activity android:name=".LeakotExemploActivity" />
-        <activity android:name=".LehakotBetarActivity"></activity>
+        <activity android:name=".Lehakot1Activity"></activity>
     </application>
 
 </manifest>

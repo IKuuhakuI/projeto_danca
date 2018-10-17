@@ -1,8 +1,6 @@
 package com.ort.luiz.projeto_danca;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,12 +17,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class SelectLeakotActivity extends AppCompatActivity {
     FirebaseDatabase database;
-    DatabaseReference acontecendoRef;
+    DatabaseReference acontecendoRef, lehakotRef;
 
     private ListView listaItens;
-    String[]itens = {"Betar", "Bnei Akiva",  "Chazitão", "Dalia", "Habonito", "Shalom (Hebraica SP)"};
+    private ArrayAdapter<String> adaptador;
+
+    private ArrayList<String> nomes = new ArrayList<>();
 
     Button btnVoltarLeakot;
 
@@ -34,6 +36,50 @@ public class SelectLeakotActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_leakot);
+        database = FirebaseDatabase.getInstance();
+        listaItens = findViewById(R.id.listViewLeakotId);
+
+        lehakotRef = database.getReference("Lehakot");
+
+        lehakotRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (int i = 1; i < 21; i++) {
+                        String nomeAtual;
+
+                        String valor = Integer.toString(i);
+
+                        nomeAtual = dataSnapshot.child(valor).child("name").getValue().toString();
+
+                        nomes.add(nomeAtual);
+                    }
+
+                adaptador = new ArrayAdapter<>(getApplicationContext(),
+                        android.R.layout.simple_list_item_1,
+                        android.R.id.text1,
+                        nomes);
+
+                listaItens.setAdapter(adaptador);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        listaItens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //String valorClicado;
+                //valorClicado = listaItens.getItemAtPosition(position).toString();
+
+                if((position + 1) == 1){
+                    startActivity(new Intent(SelectLeakotActivity.this, Lehakot1Activity.class));
+                }
+
+            }
+        });
 
         btnVoltarLeakot = findViewById(R.id.btnVoltarLeakotId);
         btnVoltarLeakot.setOnClickListener((V)->{
@@ -41,30 +87,6 @@ public class SelectLeakotActivity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
         });
 
-        listaItens = findViewById(R.id.listViewLeakotId);
-
-        ArrayAdapter<String> adaptador = new ArrayAdapter<>(
-                getApplicationContext(), // contexto da aplicação
-                android.R.layout.simple_list_item_1, // layout
-                android.R.id.text1, // id do layout
-                itens
-        );
-
-        listaItens.setAdapter(adaptador);
-
-        listaItens.setOnItemClickListener((parent, view, position, id) -> {
-            String valorClicado;
-            valorClicado = listaItens.getItemAtPosition(position).toString();
-
-            //Toast.makeText(getApplicationContext(), valorClicado, Toast.LENGTH_SHORT).show();
-
-            if(valorClicado == "Betar") {
-                startActivity(new Intent(this, LehakotBetarActivity.class));
-            }
-
-        });
-
-        database = FirebaseDatabase.getInstance();
         acontecendoRef = database.getReference("Acontecendo_agora");
         acontecendoRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -76,7 +98,10 @@ public class SelectLeakotActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
+    }
 
 
+    private void alert(String msg){
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

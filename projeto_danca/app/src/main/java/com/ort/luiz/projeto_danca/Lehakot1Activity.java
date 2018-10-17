@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -19,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LehakotBetarActivity extends AppCompatActivity {
+public class Lehakot1Activity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference acontecendoRef, lehakotExemploRef;
 
@@ -35,15 +34,15 @@ public class LehakotBetarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lehakot_betar);
+        setContentView(R.layout.activity_lehakot_1);
 
         scrollingText = findViewById(R.id.scrollingTextId4);
 
         btnVoltarLeakotExemplo = findViewById(R.id.btnVoltarLeakotExemploId);
         btnVoltarLeakotExemplo.setOnClickListener((V)->{
             btnVoltarLeakotExemplo.setBackgroundResource(R.color.White);
-
             startActivity(new Intent(this, SelectLeakotActivity.class));
+            finish();
         });
 
         database = FirebaseDatabase.getInstance();
@@ -59,7 +58,7 @@ public class LehakotBetarActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
 
-        lehakotExemploRef = database.getReference("Lehakot").child("5");
+        lehakotExemploRef = database.getReference("Lehakot").child("1");
         lehakotExemploRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -97,28 +96,28 @@ public class LehakotBetarActivity extends AppCompatActivity {
 
         btnFacebook =  findViewById(R.id.btnFacebookId);
         btnFacebook.setOnClickListener((V)->{
-            Intent facebook = getOpenFacebookIntent(context);
+            Intent facebook = getOpenFacebookIntent(context, "institutokineret");
             startActivity(facebook);
 
         });
 
         btnInstagram = findViewById(R.id.btnInstagramId);
         btnInstagram.setOnClickListener((V) ->{
-            Intent instagram  = newInstagramProfileIntent(context.getPackageManager(), "http://instagram.com/jaredrummler");
+            Intent instagram  = newInstagramProfileIntent(context.getPackageManager(), "http://instagram.com/institutokineret");
             startActivity(instagram);
-            Toast.makeText(getApplicationContext(),"Clicou",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"Clicou",Toast.LENGTH_SHORT).show();
         });
 
         btnInternet = findViewById(R.id.btnInternetId);
         btnInternet.setOnClickListener((V)->{
-            String valorClicado;
+            alert("Grupo não possui site");
+            /*String valorClicado;
             valorClicado = "";
-
             String url = "https://www.google.com.br/search?q=" + valorClicado;
             Intent browserIntent = new Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(url));
-            startActivity(browserIntent);
+            startActivity(browserIntent);*/
         });
     }
 
@@ -141,12 +140,12 @@ public class LehakotBetarActivity extends AppCompatActivity {
         return intent;
     }
 
-    public static Intent getOpenFacebookIntent(Context context) {
+    public static Intent getOpenFacebookIntent(Context context, String urlFace) {
         try {
             context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/hebraicario"));
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + urlFace));
         } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/hebraicario"));
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + urlFace));
         }
     }
 
