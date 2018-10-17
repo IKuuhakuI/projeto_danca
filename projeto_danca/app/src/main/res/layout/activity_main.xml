@@ -23,7 +23,6 @@
         android:layout_width="292dp"
         android:layout_height="29dp"
 
-        android:layout_marginLeft="9dp"
         android:layout_marginStart="9dp"
         android:layout_marginTop="28dp"
         android:background="#fff"
@@ -33,7 +32,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:text="Acontecendo agora! Imperdível! Precisa ver! Venha agora!"
+        android:text="Conecte-se a internet para receber as notificações"
         android:textColor="@android:color/black"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
@@ -99,7 +98,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnKapaimId"
         android:layout_width="209dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
