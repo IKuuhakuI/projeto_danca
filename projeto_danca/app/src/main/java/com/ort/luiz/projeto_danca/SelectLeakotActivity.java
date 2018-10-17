@@ -27,6 +27,7 @@ public class SelectLeakotActivity extends AppCompatActivity {
     private ArrayAdapter<String> adaptador;
 
     private ArrayList<String> nomes = new ArrayList<>();
+    private ArrayList<Lehaka> lehakot = new ArrayList<>();
 
     Button btnVoltarLeakot;
 
@@ -45,6 +46,9 @@ public class SelectLeakotActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                     for (int i = 1; i < 21; i++) {
+
+                        // aqui tu cria i instancias de Lehaka (usando o construtor da classe)
+
                         String nomeAtual;
 
                         String valor = Integer.toString(i);
@@ -68,17 +72,18 @@ public class SelectLeakotActivity extends AppCompatActivity {
             }
         });
 
-        listaItens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //String valorClicado;
-                //valorClicado = listaItens.getItemAtPosition(position).toString();
+        listaItens.setOnItemClickListener((parent, view, position, id) -> {
+            //String valorClicado;
+            //valorClicado = listaItens.getItemAtPosition(position).toString();
 
-                if((position + 1) == 1){
-                    startActivity(new Intent(SelectLeakotActivity.this, Lehakot1Activity.class));
-                }
 
-            }
+                // aqui tu passa a variavel Lehaka referente à celula clicada
+                Intent intent = new Intent(SelectLeakotActivity.this, LehakaActivity.class);
+                intent.putExtra("id", Integer.toString(position+1));
+                startActivity(intent);
+                //startActivity(new Intent(SelectLeakotActivity.this, Lehakot1Activity.class).putExtra(Lehakot1Activity.lehaka, gameId));
+                //startActivity(new Intent(SelectLeakotActivity.this, Lehakot1Activity.class));
+
         });
 
         btnVoltarLeakot = findViewById(R.id.btnVoltarLeakotId);

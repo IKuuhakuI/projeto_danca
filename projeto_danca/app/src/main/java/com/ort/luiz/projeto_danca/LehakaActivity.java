@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,29 +19,43 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LeakotExemploActivity extends AppCompatActivity {
+public class LehakaActivity extends AppCompatActivity {
     FirebaseDatabase database;
-    DatabaseReference acontecendoRef, leakotExemploRef;
+    DatabaseReference acontecendoRef, lehakotExemploRef;
 
     TextView scrollingText;
-    Button btnVoltarLeakotExemplo, btnFacebook, btnInstagram, btnInternet;
+    Button btnVoltarLeakotExemplo, btnFacebook, btnInstagram, btnInternet, btnVotar;
+
+    ImageView imagemFundo;
 
     private ListView horarioLeakotExemplo;
 
+    int palmas;
+
     String[]horarios = {"13"};
+
+    TextView grupoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leakot_exemplo);
+        setContentView(R.layout.activity_lehakot);
+
+        Intent i = getIntent();
+
+        String id = i.getStringExtra("id");
+
+        grupoId = findViewById(R.id.grupoId);
 
         scrollingText = findViewById(R.id.scrollingTextId4);
+        imagemFundo = findViewById(R.id.imagemFundoId);
+
 
         btnVoltarLeakotExemplo = findViewById(R.id.btnVoltarLeakotExemploId);
         btnVoltarLeakotExemplo.setOnClickListener((V)->{
             btnVoltarLeakotExemplo.setBackgroundResource(R.color.White);
-
             startActivity(new Intent(this, SelectLeakotActivity.class));
+            finish();
         });
 
         database = FirebaseDatabase.getInstance();
@@ -56,18 +71,27 @@ public class LeakotExemploActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
 
-
-        leakotExemploRef = database.getReference("Grupos").child("Grupo1").child("Apresentacoes");
-        leakotExemploRef.addValueEventListener(new ValueEventListener() {
+        lehakotExemploRef = database.getReference("Lehakot").child(id);
+        lehakotExemploRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                grupoId.setText(dataSnapshot.child("name").getValue().toString());
+
+                String fundoLehaka = dataSnapshot.child("image").getValue().toString();
+
+                imagemFundo.setImageResource(getResources().getIdentifier(fundoLehaka, "drawable", getPackageName()));
+
+
                 horarioLeakotExemplo = findViewById(R.id.listViewLeakotExemploHorariosId);
 
-                String getApresentacoes = dataSnapshot.toString().replace("DataSnapshot { key = Apresentacoes, value = {", "");
-                String temp = getApresentacoes.replace("} }", "");
+                String getApresentacoes = dataSnapshot.child("Apresentacoes").toString().replace("DataSnapshot { key = Apresentacoes, value = ", "");
+                String temp = getApresentacoes.replace(" }", "");
+
                 getApresentacoes = temp.replace("=", " - ");
 
                 horarios = getApresentacoes.split(", ");
+
+                palmas = Integer.parseInt(dataSnapshot.child("kapaim").getValue().toString());
 
                 ArrayAdapter<String> adaptadorHorario = new ArrayAdapter<>(
                         getApplicationContext(), // contexto da aplicação
@@ -81,32 +105,40 @@ public class LeakotExemploActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
 
+
+        btnVotar = findViewById(R.id.btnVotarBetarId);
+
+        btnVotar.setOnClickListener(v -> {
+            palmas += 1;
+            lehakotExemploRef.child("kapaim").setValue(palmas);
+        });
+
         Context context = getApplicationContext();
 
         btnFacebook =  findViewById(R.id.btnFacebookId);
         btnFacebook.setOnClickListener((V)->{
-            Intent facebook = getOpenFacebookIntent(context);
+            Intent facebook = getOpenFacebookIntent(context, "institutokineret");
             startActivity(facebook);
 
         });
 
         btnInstagram = findViewById(R.id.btnInstagramId);
         btnInstagram.setOnClickListener((V) ->{
-            Intent instagram  = newInstagramProfileIntent(context.getPackageManager(), "http://instagram.com/jaredrummler");
+            Intent instagram  = newInstagramProfileIntent(context.getPackageManager(), "http://instagram.com/institutokineret");
             startActivity(instagram);
-            Toast.makeText(getApplicationContext(),"Clicou",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"Clicou",Toast.LENGTH_SHORT).show();
         });
 
         btnInternet = findViewById(R.id.btnInternetId);
         btnInternet.setOnClickListener((V)->{
-            String valorClicado;
+            alert("Grupo não possui site");
+            /*String valorClicado;
             valorClicado = "";
-
             String url = "https://www.google.com.br/search?q=" + valorClicado;
             Intent browserIntent = new Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(url));
-            startActivity(browserIntent);
+            startActivity(browserIntent);*/
         });
     }
 
@@ -129,12 +161,16 @@ public class LeakotExemploActivity extends AppCompatActivity {
         return intent;
     }
 
-    public static Intent getOpenFacebookIntent(Context context) {
+    public static Intent getOpenFacebookIntent(Context context, String urlFace) {
         try {
             context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/hebraicario"));
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + urlFace));
         } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/hebraicario"));
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + urlFace));
         }
+    }
+
+    private void alert(String msg){
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }
