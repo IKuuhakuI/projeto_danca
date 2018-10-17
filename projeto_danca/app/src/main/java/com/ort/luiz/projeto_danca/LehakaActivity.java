@@ -33,6 +33,7 @@ public class LehakaActivity extends AppCompatActivity {
     int palmas;
 
     String[]horarios = {"13"};
+    boolean isVotable = false;
 
     TextView grupoId;
 
@@ -75,6 +76,11 @@ public class LehakaActivity extends AppCompatActivity {
         lehakotExemploRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("isVotable").getValue().toString() == "true"){
+                    isVotable = true;
+                } else {
+                    isVotable = false;
+                }
                 grupoId.setText(dataSnapshot.child("name").getValue().toString());
 
                 String fundoLehaka = dataSnapshot.child("image").getValue().toString();
@@ -109,8 +115,10 @@ public class LehakaActivity extends AppCompatActivity {
         btnVotar = findViewById(R.id.btnVotarBetarId);
 
         btnVotar.setOnClickListener(v -> {
-            palmas += 1;
-            lehakotExemploRef.child("kapaim").setValue(palmas);
+            if(isVotable == true) {
+                palmas += 1;
+                lehakotExemploRef.child("kapaim").setValue(palmas);
+            }
         });
 
         Context context = getApplicationContext();

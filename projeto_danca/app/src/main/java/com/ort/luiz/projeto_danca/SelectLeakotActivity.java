@@ -27,7 +27,6 @@ public class SelectLeakotActivity extends AppCompatActivity {
     private ArrayAdapter<String> adaptador;
 
     private ArrayList<String> nomes = new ArrayList<>();
-    private ArrayList<Lehaka> lehakot = new ArrayList<>();
 
     Button btnVoltarLeakot;
 
@@ -45,10 +44,10 @@ public class SelectLeakotActivity extends AppCompatActivity {
         lehakotRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (int i = 1; i < 21; i++) {
-
-                        // aqui tu cria i instancias de Lehaka (usando o construtor da classe)
-
+                    for (int i = 1; i < 61; i++) {
+                        if(i == 26){
+                            continue;
+                        }
                         String nomeAtual;
 
                         String valor = Integer.toString(i);
