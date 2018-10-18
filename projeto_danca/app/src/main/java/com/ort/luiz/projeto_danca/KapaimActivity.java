@@ -63,7 +63,7 @@ public class KapaimActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (int i = 1; i < 61; i++) {
-                    if(i == 26 || dataSnapshot.child(Integer.toString(i)).child("isVotable").getValue().toString() == "false"){
+                    if(i == 26 || i == 25 || dataSnapshot.child(Integer.toString(i)).child("isVotable").getValue().toString() == "false"){
                         continue;
                     }
 

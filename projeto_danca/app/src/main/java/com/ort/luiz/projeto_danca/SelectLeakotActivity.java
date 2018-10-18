@@ -46,9 +46,9 @@ public class SelectLeakotActivity extends AppCompatActivity {
         lehakotRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (int i = 1; i < 61; i++) {
-                        if(i == 26){
-                            i++;
+                    for (int i = 1; i < 62; i++) {
+                        if(i == 25){
+                           i += 2;
                         }
                             String nomeAtual;
 
@@ -79,7 +79,7 @@ public class SelectLeakotActivity extends AppCompatActivity {
                 if(position < 25){
                     intent.putExtra("id", Integer.toString(position+1));
                 } else {
-                    intent.putExtra("id", Integer.toString(position+2));
+                    intent.putExtra("id", Integer.toString(position+3));
                 }
                 startActivity(intent);
         });

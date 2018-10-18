@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,7 +36,6 @@ public class EventosActivity extends AppCompatActivity {
     String selecionado = "1";
 
     private ListView listaItens;
-    String[]itens = {"1"};
 
     Button btnDia1, btnDia2, btnDia3, btnVoltarEventos;
 
@@ -108,8 +108,10 @@ public class EventosActivity extends AppCompatActivity {
                 String valor1 = valor.replace("{", "");
                 valor = valor1.replace("}", "");
                 valor1 = valor.replace("=", " > ");
-                itens = valor1.split(", ");
-                //Toast.makeText(getApplicationContext(),valor,Toast.LENGTH_SHORT).show();
+                valor = valor1.replace("[null, ", "");
+                valor1 = valor.replace("]", "");
+
+                String [] itens = valor1.split(", ");
 
                 listaItens = findViewById(R.id.listViewId);
                 ArrayAdapter<String> adaptador = new ArrayAdapter<>(
@@ -130,8 +132,6 @@ public class EventosActivity extends AppCompatActivity {
                     horaFinalSelecionada = listaItens.getItemAtPosition(position).toString().substring(listaItens.getItemAtPosition(position).toString().length() - 5 , listaItens.getItemAtPosition(position).toString().length());
 
                     local = listaItens.getItemAtPosition(position).toString().substring(listaItens.getItemAtPosition(position).toString().indexOf(">")+2, listaItens.getItemAtPosition(position).toString().length() - 16);
-
-                    //Toast.makeText(getApplicationContext(), horaSelecionada, Toast.LENGTH_SHORT).show();
 
                     int horaInicial = Integer.parseInt(horaSelecionada.substring(0, 2));
                     int minutoInicial = Integer.parseInt(horaSelecionada.substring(3, horaSelecionada.length()));
@@ -158,7 +158,7 @@ public class EventosActivity extends AppCompatActivity {
                     dialogo.setCancelable(false);
 
                     dialogo.setNegativeButton("Não", (dialog, which) -> {
-                    }
+                            }
                     );
 
                     dialogo.setPositiveButton("Sim", (dialog, which) -> {
@@ -233,33 +233,10 @@ public class EventosActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
-            Date converteData(String data) {
-                Date novaData = new Date();
-                String partDate = "2018-10-19";
-
-                if(selecionado == "Dia1"){
-                    partDate = "2018-10-19";
-                } else if(selecionado == "Dia2") {
-                    partDate = "2018-10-20";
-                } else if(selecionado == "Dia 3") {
-                    partDate = "2018-10-21";
-                }
-
-                String dtStart = partDate.concat(data).concat(":00");
-
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                try {
-                    Date date = format.parse(dtStart);
-                    System.out.println(date);
-                    novaData = date;
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                return novaData;
-            }
         });
+    }
 
-
+    private void alert(String msg){
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

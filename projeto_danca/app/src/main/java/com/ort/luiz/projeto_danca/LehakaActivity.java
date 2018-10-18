@@ -30,7 +30,7 @@ public class LehakaActivity extends AppCompatActivity {
 
     ImageView imagemFundo;
 
-    private ListView horarioLeakotExemplo;
+    private ListView horarioLehakotExemplo;
 
     int palmas;
 
@@ -101,7 +101,7 @@ public class LehakaActivity extends AppCompatActivity {
                 urlFace = dataSnapshot.child("facebook").getValue().toString();
                 urlInsta = dataSnapshot.child("instagram").getValue().toString();
 
-                horarioLeakotExemplo = findViewById(R.id.listViewLeakotExemploHorariosId);
+                horarioLehakotExemplo = findViewById(R.id.listViewLeakotExemploHorariosId);
 
                 String getApresentacoes = dataSnapshot.child("Apresentacoes").toString().replace("DataSnapshot { key = Apresentacoes, value = ", "");
                 String temp = getApresentacoes.replace(" }", "");
@@ -118,12 +118,11 @@ public class LehakaActivity extends AppCompatActivity {
                         android.R.id.text1, // id do layout
                         horarios
                 );
-                horarioLeakotExemplo.setAdapter(adaptadorHorario);
+                horarioLehakotExemplo.setAdapter(adaptadorHorario);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) { }});
-
 
         btnVotar = findViewById(R.id.btnVotarBetarId);
 
