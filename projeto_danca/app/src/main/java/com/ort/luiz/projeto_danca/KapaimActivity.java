@@ -99,9 +99,9 @@ public class KapaimActivity extends AppCompatActivity {
             Intent intent = new Intent(KapaimActivity.this, LehakaActivity.class);
 
             intent.putExtra("id", Integer.toString(posicoes.get(position)));
+            intent.putExtra("lastPage", "kapaim");
 
             startActivity(intent);
-            finish();
         });
 
         btnVoltarKapaim = findViewById(R.id.btnVoltarKapaimId);

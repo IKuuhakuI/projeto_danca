@@ -51,8 +51,9 @@ public class LehakaActivity extends AppCompatActivity {
         Intent i = getIntent();
 
         String id = i.getStringExtra("id");
+        String lastPage = i.getStringExtra("lastPage");
 
-        //alert(id);
+        //alert(lastPage);
 
         grupoId = findViewById(R.id.grupoId);
 
@@ -62,8 +63,13 @@ public class LehakaActivity extends AppCompatActivity {
         btnVoltarLeakotExemplo = findViewById(R.id.btnVoltarLeakotExemploId);
         btnVoltarLeakotExemplo.setOnClickListener((V)->{
             btnVoltarLeakotExemplo.setBackgroundResource(R.color.White);
-            startActivity(new Intent(this, SelectLeakotActivity.class));
+            if(lastPage == "kapaim"){
+                startActivity(new Intent(this, KapaimActivity.class));
+            } else if(lastPage == "lehaka"){
+                startActivity(new Intent(this, SelectLeakotActivity.class));
+            }
             finish();
+
         });
 
         database = FirebaseDatabase.getInstance();

@@ -81,6 +81,7 @@ public class SelectLeakotActivity extends AppCompatActivity {
                 } else {
                     intent.putExtra("id", Integer.toString(position+3));
                 }
+                intent.putExtra("lastPage", "lehaka");
                 startActivity(intent);
         });
 
