@@ -32,6 +32,8 @@ public class SelectLeakotActivity extends AppCompatActivity {
 
     TextView scrollingText;
 
+    int count = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,23 +48,24 @@ public class SelectLeakotActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                     for (int i = 1; i < 61; i++) {
                         if(i == 26){
-                            continue;
+                            i++;
                         }
-                        String nomeAtual;
+                            String nomeAtual;
 
-                        String valor = Integer.toString(i);
+                            String valor = Integer.toString(i);
 
-                        nomeAtual = dataSnapshot.child(valor).child("name").getValue().toString();
+                            nomeAtual = dataSnapshot.child(valor).child("name").getValue().toString();
 
-                        nomes.add(nomeAtual);
+                            nomes.add(nomeAtual);
                     }
-
-                adaptador = new ArrayAdapter<>(getApplicationContext(),
+                    if(count == 0){
+                        adaptador = new ArrayAdapter<>(getApplicationContext(),
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         nomes);
-
-                listaItens.setAdapter(adaptador);
+                        listaItens.setAdapter(adaptador);
+                        count++;
+                    }
             }
 
             @Override
@@ -72,17 +75,13 @@ public class SelectLeakotActivity extends AppCompatActivity {
         });
 
         listaItens.setOnItemClickListener((parent, view, position, id) -> {
-            //String valorClicado;
-            //valorClicado = listaItens.getItemAtPosition(position).toString();
-
-
-                // aqui tu passa a variavel Lehaka referente à celula clicada
                 Intent intent = new Intent(SelectLeakotActivity.this, LehakaActivity.class);
-                intent.putExtra("id", Integer.toString(position+1));
+                if(position < 25){
+                    intent.putExtra("id", Integer.toString(position+1));
+                } else {
+                    intent.putExtra("id", Integer.toString(position+2));
+                }
                 startActivity(intent);
-                //startActivity(new Intent(SelectLeakotActivity.this, Lehakot1Activity.class).putExtra(Lehakot1Activity.lehaka, gameId));
-                //startActivity(new Intent(SelectLeakotActivity.this, Lehakot1Activity.class));
-
         });
 
         btnVoltarLeakot = findViewById(R.id.btnVoltarLeakotId);

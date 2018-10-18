@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,6 +39,10 @@ public class LehakaActivity extends AppCompatActivity {
 
     TextView grupoId;
 
+    String urlNet = "";
+    String urlFace = "";
+    String urlInsta = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +52,12 @@ public class LehakaActivity extends AppCompatActivity {
 
         String id = i.getStringExtra("id");
 
+        //alert(id);
+
         grupoId = findViewById(R.id.grupoId);
 
         scrollingText = findViewById(R.id.scrollingTextId4);
         imagemFundo = findViewById(R.id.imagemFundoId);
-
 
         btnVoltarLeakotExemplo = findViewById(R.id.btnVoltarLeakotExemploId);
         btnVoltarLeakotExemplo.setOnClickListener((V)->{
@@ -80,6 +87,7 @@ public class LehakaActivity extends AppCompatActivity {
                     isVotable = true;
                 } else {
                     isVotable = false;
+                    btnVotar.setVisibility(View.GONE);
                 }
                 grupoId.setText(dataSnapshot.child("name").getValue().toString());
 
@@ -87,6 +95,11 @@ public class LehakaActivity extends AppCompatActivity {
 
                 imagemFundo.setImageResource(getResources().getIdentifier(fundoLehaka, "drawable", getPackageName()));
 
+                if(dataSnapshot.child("website").getValue().toString().length() > 2) {
+                    urlNet = dataSnapshot.child("website").getValue().toString();
+                }
+                urlFace = dataSnapshot.child("facebook").getValue().toString();
+                urlInsta = dataSnapshot.child("instagram").getValue().toString();
 
                 horarioLeakotExemplo = findViewById(R.id.listViewLeakotExemploHorariosId);
 
@@ -125,28 +138,33 @@ public class LehakaActivity extends AppCompatActivity {
 
         btnFacebook =  findViewById(R.id.btnFacebookId);
         btnFacebook.setOnClickListener((V)->{
-            Intent facebook = getOpenFacebookIntent(context, "institutokineret");
+            Intent facebook = getOpenFacebookIntent(context, urlFace);
             startActivity(facebook);
 
         });
 
         btnInstagram = findViewById(R.id.btnInstagramId);
         btnInstagram.setOnClickListener((V) ->{
-            Intent instagram  = newInstagramProfileIntent(context.getPackageManager(), "http://instagram.com/institutokineret");
-            startActivity(instagram);
-            //Toast.makeText(getApplicationContext(),"Clicou",Toast.LENGTH_SHORT).show();
+            if(urlInsta == ""){
+                alert("Grupo não possui instagram");
+            } else {
+                Intent instagram = newInstagramProfileIntent(context.getPackageManager(), "http://instagram.com/institutokineret");
+                startActivity(instagram);
+            }
         });
 
         btnInternet = findViewById(R.id.btnInternetId);
         btnInternet.setOnClickListener((V)->{
-            alert("Grupo não possui site");
-            /*String valorClicado;
-            valorClicado = "";
-            String url = "https://www.google.com.br/search?q=" + valorClicado;
-            Intent browserIntent = new Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(url));
-            startActivity(browserIntent);*/
+            if(urlNet == ""){
+                alert("Grupo não possui site");
+
+            } else {
+                String url = urlNet;
+                Intent browserIntent = new Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(url));
+                startActivity(browserIntent);
+            }
         });
     }
 

@@ -103,37 +103,35 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="Eventos"
         android:textColor="@android:color/black"
-        app:layout_constraintEnd_toStartOf="@+id/btnVotarBetarId"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnInstagramId" />
+        app:layout_constraintTop_toBottomOf="@+id/btnInternetId" />
 
     <ListView
         android:id="@+id/listViewLeakotExemploHorariosId"
-        android:layout_width="191dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="7dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/btnVoltarLeakotExemploId"
-        app:layout_constraintEnd_toStartOf="@+id/btnVotarBetarId"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/btnVotarBetarId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
-        android:background="@drawable/button_border"
-        android:text="Votar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        android:layout_width="55dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/palmas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imagemFundoId" />
 
     <TextView
         android:id="@+id/grupoId"
