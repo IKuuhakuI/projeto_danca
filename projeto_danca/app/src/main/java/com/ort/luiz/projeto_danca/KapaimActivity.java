@@ -1,12 +1,15 @@
 package com.ort.luiz.projeto_danca;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -96,12 +99,16 @@ public class KapaimActivity extends AppCompatActivity {
         });
 
         listaItens.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(KapaimActivity.this, LehakaActivity.class);
+            if (verificaConexao() == true) {
+                Intent intent = new Intent(KapaimActivity.this, LehakaActivity.class);
 
-            intent.putExtra("id", Integer.toString(posicoes.get(position)));
-            intent.putExtra("lastPage", "kapaim");
+                intent.putExtra("id", Integer.toString(posicoes.get(position)));
+                intent.putExtra("lastPage", "kapaim");
 
-            startActivity(intent);
+                startActivity(intent);
+            } else {
+                alert("Não há conexão com a internet, por favor tente novamente");
+            }
         });
 
         btnVoltarKapaim = findViewById(R.id.btnVoltarKapaimId);
@@ -110,5 +117,22 @@ public class KapaimActivity extends AppCompatActivity {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
+    }
+
+    public  boolean verificaConexao() {
+        boolean conectado;
+        ConnectivityManager conectivtyManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conectivtyManager.getActiveNetworkInfo() != null
+                && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                && conectivtyManager.getActiveNetworkInfo().isConnected()) {
+            conectado = true;
+        } else {
+            conectado = false;
+        }
+        return conectado;
+    }
+
+    private void alert(String msg){
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }

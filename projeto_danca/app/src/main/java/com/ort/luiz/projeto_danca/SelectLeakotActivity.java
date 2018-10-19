@@ -47,8 +47,8 @@ public class SelectLeakotActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                     for (int i = 1; i < 62; i++) {
-                        if(i == 25){
-                           i += 2;
+                        if(i == 26 || i == 25){
+                            continue;
                         }
                             String nomeAtual;
 
@@ -76,11 +76,13 @@ public class SelectLeakotActivity extends AppCompatActivity {
 
         listaItens.setOnItemClickListener((parent, view, position, id) -> {
                 Intent intent = new Intent(SelectLeakotActivity.this, LehakaActivity.class);
-                if(position < 25){
+                if(position < 24){
                     intent.putExtra("id", Integer.toString(position+1));
                 } else {
                     intent.putExtra("id", Integer.toString(position+3));
                 }
+
+                //System.out.println(position);
                 intent.putExtra("lastPage", "lehaka");
                 startActivity(intent);
         });

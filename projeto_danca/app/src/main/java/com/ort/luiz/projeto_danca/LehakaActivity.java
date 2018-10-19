@@ -89,6 +89,7 @@ public class LehakaActivity extends AppCompatActivity {
         lehakotExemploRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot);
                 if(dataSnapshot.child("isVotable").getValue().toString() == "true"){
                     isVotable = true;
                 } else {
