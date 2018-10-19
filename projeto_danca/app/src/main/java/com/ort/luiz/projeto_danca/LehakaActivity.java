@@ -153,7 +153,7 @@ public class LehakaActivity extends AppCompatActivity {
             if(urlInsta == ""){
                 alert("Grupo não possui instagram");
             } else {
-                Intent instagram = newInstagramProfileIntent(context.getPackageManager(), "http://instagram.com/institutokineret");
+                Intent instagram = newInstagramProfileIntent(context.getPackageManager(), "http://instagram.com/" + urlInsta);
                 startActivity(instagram);
             }
         });
